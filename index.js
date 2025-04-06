@@ -5,6 +5,7 @@ require('dotenv').config() // loads data from .env file
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
+
 app.use(express.urlencoded({
     extended: true
   }))
@@ -24,4 +25,4 @@ app.use('/', router);
 
 app.listen(process.env.PORT ||3000, () => {
     console.log('Server started. Ctrl^c to quit.');
-    })  
+})  
