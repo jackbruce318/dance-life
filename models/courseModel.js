@@ -15,30 +15,31 @@ class Course
     //Each course has several classes, which themselves contain a list of participants which are added when users register attendance
     init() {
         this.db.insert({
+            id: '2',
             name: 'Zumba',
             description: 'Dance with an exercise twist!',
             duration: 'One Week',
             classes: [
                 {
-                    DateTime: new Date('2025-04-10T18:00:00'),
-                    Description: 'Zumba Basics',
-                    Location: 'Studio A',
-                    Price: 10.0,
-                    Participants: []
+                    dateTime: new Date('2025-04-10T18:00:00'),
+                    description: 'Zumba Basics',
+                    location: 'Studio A',
+                    price: 10.0,
+                    participants: []
                 },
                 {
-                    DateTime: new Date('2025-04-12T19:30:00'),
-                    Description: 'Zumba Cardio Blast',
-                    Location: 'Studio B',
-                    Price: 12.5,
-                    Participants: []
+                    dateTime: new Date('2025-04-12T19:30:00'),
+                    description: 'Zumba Cardio Blast',
+                    location: 'Studio B',
+                    price: 12.5,
+                    participants: []
                 },
                 {
-                    DateTime: new Date('2025-04-15T17:00:00'),
-                    Description: 'Zumba Strength Training',
-                    Location: 'Studio C',
-                    Price: 14.0,
-                    Participants: []
+                    dateTime: new Date('2025-04-15T17:00:00'),
+                    description: 'Zumba Strength Training',
+                    location: 'Studio C',
+                    price: 14.0,
+                    participants: []
                 }
             ] 
         });
@@ -46,30 +47,31 @@ class Course
         console.log('db entry Zumba inserted');
 
         this.db.insert({
+            id: '1',
             name: 'Street Dance',
             description: 'Urban beats and modern moves!',
             duration: 'Three Weeks',
             classes: [
                 {
-                    DateTime: new Date('2025-05-20T18:00:00'),
-                    Description: 'Street Basics',
-                    Location: 'Studio C',
-                    Price: 10.0,
-                    Participants: []
+                    dateTime: new Date('2025-05-20T18:00:00'),
+                    description: 'Street Basics',
+                    location: 'Studio C',
+                    price: 10.0,
+                    participants: []
                 },
                 {
-                    DateTime: new Date('2025-05-27T19:30:00'),
-                    Description: 'Street Rhythm',
-                    Location: 'Studio B',
-                    Price: 12.5,
-                    Participants: []
+                    dateTime: new Date('2025-05-27T19:30:00'),
+                    description: 'Street Rhythm',
+                    location: 'Studio B',
+                    price: 12.5,
+                    participants: []
                 },
                 {
-                    DateTime: new Date('2025-06-04T20:00:00'),
-                    Description: 'Street Dance Battles',
-                    Location: 'Studio A',
-                    Price: 14.0,
-                    Participants: []
+                    dateTime: new Date('2025-06-04T20:00:00'),
+                    description: 'Street Dance Battles',
+                    location: 'Studio A',
+                    price: 14.0,
+                    participants: []
                 }
             ] 
         });
@@ -95,7 +97,22 @@ class Course
                 }
             })
         })
-        }
+    }
+
+    //return entry corresponding to a specific id
+    getEntryById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.find({ 'id': id }, function (err, entries) {
+                if (err) {
+                    reject(err);
+                } else {
+                    //return the first entry in the entries list because ids are unique
+                    resolve(entries[0]);
+                    console.log('getEntryById returns: ' ,entries[0]);
+                }
+            })
+        })
+    }
 
 }
 

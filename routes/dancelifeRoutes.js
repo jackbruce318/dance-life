@@ -8,7 +8,7 @@ router.get("/", controller.home);
 router.get("/viewCourses", controller.view_courses)
 
 
-router.get("/courseDetails", controller.course_details)
+router.get("/classes/:id", controller.course_details)
 
 router.get("/bookClass", controller.book_class)
 

@@ -24,7 +24,19 @@ exports.view_courses = function(req, res) {
 }
 
 exports.course_details = function(req, res) {
-    res.send('<h1>Under Construction, come back later!</h1>');
+    console.log('finding class details', req.params.id);
+    let id = req.params.id;
+
+    db.getEntryById(id).then(
+        (entry) => {
+
+        console.log('Entry classes:', entry.classes);
+        res.render('viewClasses', {
+            entries: entry.classes
+        });
+        }).catch((err) => {
+        console.log('error handling course classes', err);
+    });
 }
 
 exports.book_class = function(req, res) {
