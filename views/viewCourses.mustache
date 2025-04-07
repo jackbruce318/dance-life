@@ -1,0 +1,24 @@
+<html>
+
+{{>header}}
+
+<body>
+    
+    {{#entries}}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{name}}</h4>
+            <p class="card-text">
+            {{description}}
+            </p>
+            <div class="card-footer">
+            <p>Duration of Course: </p> {{duration}}
+        </div>
+    </div>
+    {{/entries}}
+
+    {{^entries}}
+    No entries yet.
+    {{/entries}}
+</body>
+</html>
