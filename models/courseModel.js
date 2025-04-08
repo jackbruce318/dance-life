@@ -21,6 +21,7 @@ class Course
             duration: 'One Week',
             classes: [
                 {
+                    id: '4',
                     dateTime: new Date('2025-04-10T18:00:00'),
                     description: 'Zumba Basics',
                     location: 'Studio A',
@@ -28,6 +29,7 @@ class Course
                     participants: []
                 },
                 {
+                    id: '5',
                     dateTime: new Date('2025-04-12T19:30:00'),
                     description: 'Zumba Cardio Blast',
                     location: 'Studio B',
@@ -35,6 +37,7 @@ class Course
                     participants: []
                 },
                 {
+                    id: '6',
                     dateTime: new Date('2025-04-15T17:00:00'),
                     description: 'Zumba Strength Training',
                     location: 'Studio C',
@@ -53,6 +56,7 @@ class Course
             duration: 'Three Weeks',
             classes: [
                 {
+                    id: '1',
                     dateTime: new Date('2025-05-20T18:00:00'),
                     description: 'Street Basics',
                     location: 'Studio C',
@@ -60,6 +64,7 @@ class Course
                     participants: []
                 },
                 {
+                    id: '2',
                     dateTime: new Date('2025-05-27T19:30:00'),
                     description: 'Street Rhythm',
                     location: 'Studio B',
@@ -67,6 +72,7 @@ class Course
                     participants: []
                 },
                 {
+                    id: '3',
                     dateTime: new Date('2025-06-04T20:00:00'),
                     description: 'Street Dance Battles',
                     location: 'Studio A',
@@ -112,6 +118,20 @@ class Course
                 }
             })
         })
+    }
+
+    //in this method we add a participant to a class by
+    //finding the class in the database and pushing the participant to the participants array
+    addParticipant(id, classId){
+        this.getEntryById(id).then(
+            (entry) => {
+                
+            //Here we use the find method to search the array for the entry whose id matches the id 
+            //which was passed to the method as a parameter
+            const classToBeBooked = entry.classes.find((currentClass) => currentClass.id == classId);
+
+            console.log("Class find method returned: ", classToBeBooked.description)
+        });
     }
 
 }

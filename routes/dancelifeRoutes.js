@@ -10,7 +10,7 @@ router.get("/viewCourses", controller.view_courses)
 
 router.get("/classes/:id", controller.course_details)
 
-router.get("/bookClass", controller.book_class)
+router.get("/registerAttendance/:courseId/:id", controller.book_class)
 
 router.get("/courseEnrol", controller.enrol_course)
 
