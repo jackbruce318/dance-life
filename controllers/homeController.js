@@ -41,15 +41,47 @@ exports.course_details = function(req, res) {
 }
 
 exports.book_class = function(req, res) {
-    res.send('<h1>Under Construction, come back later!</h1>');
-    let courseId = req.params.courseId;
-    let classId = req.params.id;
+    
+    const id = req.params.courseId; // Extract courseId from the route
+    const classId = req.params.id; // Extract classId from the route
 
-    //for debugging data flow
-    console.log('courseId:', courseId);
-    console.log('classId:', classId);
+    db.getEntryById(id).then(
+        (entry) => {
 
-    db.addParticipant(courseId, classId)
+            //error handler in case query returns no results
+            if (!entry || !entry.classes) {
+                console.log("No entry or classes found for id:", id);
+                return res.status(404).send("Class not found.");
+            }
+
+        const classToBeBooked = entry.classes.find((currentClass) => currentClass.id == classId);
+
+        //error handler in case query returns no results
+        if (!classToBeBooked) {
+            console.log("Class not found for classId:", classId);
+            return res.status(404).send("Class not found.");
+        }
+
+        console.log("Class find method returned: ", classToBeBooked.description)
+
+        console.log('Entry classes:', entry.classes);
+        res.render('registerAttendance', {
+            description: classToBeBooked.description,
+            location: classToBeBooked.location,
+            date: classToBeBooked.date,
+            courseId: entry.id,
+            classId: classToBeBooked.id,
+        });
+        }).catch((err) => {
+        console.log('error handling course classes', err);
+    });
+    
+
+}
+
+exports.post_book_class = function(req, res) {
+    //Console output to check that data is flowing correctly
+    console.log('Booking class:', req.params.id);
 }
 
 exports.enrol_course = function(req, res) {

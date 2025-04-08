@@ -11,6 +11,7 @@ router.get("/viewCourses", controller.view_courses)
 router.get("/classes/:id", controller.course_details)
 
 router.get("/registerAttendance/:courseId/:id", controller.book_class)
+router.post("/registerAttendance/:courseId/:id", controller.post_book_class)
 
 router.get("/courseEnrol", controller.enrol_course)
 
