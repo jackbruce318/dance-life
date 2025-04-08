@@ -82,6 +82,35 @@ exports.book_class = function(req, res) {
 exports.post_book_class = function(req, res) {
     //Console output to check that data is flowing correctly
     console.log('Booking class:', req.params.id);
+    let id = req.params.id;
+    let courseId = req.params.courseId;
+
+    db.getEntryById(courseId).then(entry => {
+        //error handler in case query returns no results
+        if (!entry || !entry.classes) {
+            console.log("No entry or classes found for id:", id);
+            return res.status(404).send("Class not found.");
+        }
+
+        const classToBeBooked = entry.classes.find((currentClass) => currentClass.id == id);
+
+        //error handler in case query returns no results
+        if (!classToBeBooked) {
+            console.log("Class not found for classId:", id);
+            return res.status(404).send("Class not found.");
+        }
+
+        console.log("Class find method returned: ", classToBeBooked.description)
+
+        //add the participant to the class
+        classToBeBooked.participants.push(req.body.name);
+
+        //console log to show that participant has been added to the class
+        console.log('Participant added to class:', req.body.name);
+
+        message = "You have successfully registered your attendance!"
+        res.redirect('/viewCourses'); // Redirect to the class page after booking
+    })
 }
 
 exports.enrol_course = function(req, res) {
