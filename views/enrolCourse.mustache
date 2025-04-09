@@ -1,0 +1,14 @@
+<html>
+
+{{>header}}
+
+<body>
+    <h2>Confirm Enrolment for {{name}} for {{duration}} commencing {{startDate}}? You will be registered present for all classes.</h2> </br>
+    <h3>Please confirm you are able to attend the classes listed on the previous page so our attendance figures are accurate.</h3>
+    <form action="/enrolCourse/{{id}}" method="POST">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Confirm</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+
+{{>header}}
+
+<body>
+<h3>Already know that you'll be available for all of these classes? Save time and enrol in the course <a href = "/enrolCourse/{{courseId}}">here!</a></h3>
+    
+    {{#entries}}
+    <div>
+        <div>
+            <h4>{{description}}</h4>
+            <p>
+            {{location}}
+            </p>
+            <div>
+            <p>Date and Time: {{dateTime}}</p> </br>
+            <a href="/registerAttendance/{{courseId}}/{{id}}" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+    </hr>
+    {{/entries}}
+
+    {{^entries}}
+    No entries yet.
+    {{/entries}}
+</body>
+</html>

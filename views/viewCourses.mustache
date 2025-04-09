@@ -1,0 +1,26 @@
+<html>
+
+{{>header}}
+
+<body>
+    <h3>{{message}}</h3>
+    {{#entries}}
+    <div>
+        <div>
+            <h4>{{name}}</h4>
+            <p>
+            {{description}}
+            </p>
+            <div>
+            <p>Duration of Course: </p> {{duration}} </br>
+            <a href="/classes/{{id}}" class="btn btn-primary">View Classes</a>
+        </div>
+    </div>
+    </hr>
+    {{/entries}}
+
+    {{^entries}}
+    No entries yet.
+    {{/entries}}
+</body>
+</html>
