@@ -134,6 +134,10 @@ class Course
         });
     }
 
+    update(query, updateData, options, callback) {
+        this.db.update(query, updateData, options, callback);
+    }
+
 }
 
 module.exports = Course;

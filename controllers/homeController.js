@@ -105,16 +105,76 @@ exports.post_book_class = function(req, res) {
         //add the participant to the class
         classToBeBooked.participants.push(req.body.name);
 
-        //console log to show that participant has been added to the class
-        console.log('Participant added to class:', req.body.name);
+        db.update({ id: entry.id }, entry, {}, (err, numReplaced) => {
+            if (err) {
+                console.log("Error updating database:", err);
+                return res.status(500).send("Internal Server Error.");
+            }
 
-        message = "You have successfully registered your attendance!"
-        res.redirect('/viewCourses'); // Redirect to the class page after booking
+            console.log(`Participant added to class ${id} and saved to database.`);
+            res.redirect('/viewCourses'); // Redirect to the class page after booking
+        });
+
     })
 }
 
 exports.enrol_course = function(req, res) {
-    res.send('<h1>Under Construction, come back later!</h1>');
+    let id = req.params.courseId; // Extract courseId from the route
+    console.log('Enrolling in course:', id);
+
+    db.getEntryById(id).then(
+        (entry) => {
+            //error handler in case query returns no results
+            if (!entry || !entry.classes) {
+                console.log("No entry or classes found for id:", id);
+                return res.status(404).send("Class not found.");
+            }
+
+            
+            res.render('enrolCourse', {
+                name: entry.name,
+                id: entry.id,
+                duration: entry.duration,
+                startDate: entry.classes[0].dateTime,
+            });
+        }).catch((err) => {
+        console.log('error handling course classes', err);
+    });
+}
+
+exports.post_enrol_course = function(req, res) {
+
+    //Console output to check that data is flowing correctly
+    console.log('Post Enrolling in course:', req.params.courseId);
+    let id = req.params.courseId;
+    let enrolment = req.body.name; // Get the enrolment data from the form
+
+    db.getEntryById(id).then(entry => {
+        //error handler in case query returns no results
+        if (!entry || !entry.classes) {
+            console.log("No entry or classes found for id:", id);
+            return res.status(404).send("Class not found.");
+        }
+
+        //register the participant in every class for the course
+        entry.classes.forEach((classToBeBooked) => {
+            classToBeBooked.participants.push(enrolment);
+        });
+
+        db.update({ id: entry.id }, entry, {}, (err, numReplaced) => {
+            if (err) {
+                console.log("Error updating database:", err);
+                return res.status(500).send("Internal Server Error.");
+            }
+
+            console.log(`Participant added to course ${id} and saved to database.`);
+            res.redirect('/viewCourses'); // Redirect to the class page after booking
+        });
+
+    })
+    .catch((err) => {
+        console.log('error handling course classes', err);
+    });
 }
 
 

@@ -13,6 +13,9 @@ router.get("/classes/:id", controller.course_details)
 router.get("/registerAttendance/:courseId/:id", controller.book_class)
 router.post("/registerAttendance/:courseId/:id", controller.post_book_class)
 
+router.get("/enrolCourse/:courseId", controller.enrol_course)
+router.post("/enrolCourse/:courseId", controller.post_enrol_course)
+
 router.get("/courseEnrol", controller.enrol_course)
 
 router.use(function(req, res) {
