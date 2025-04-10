@@ -1,7 +1,21 @@
 <html>
-    <head>{{>header}}</head>
+    <head>{{>header}}
+    
+    </head>
 
     <body>
+
+        {{^user}}
+        <a href="/user/signIn">Sign In</a>
+        {{/user}}
+
+
+        {{#user}}
+        <a id="logout" href="/user/logout" class="btn btn-primary">
+        Sign out
+        </a>
+        {{/user}}
+        
         <div class="container mt-5">
             <div class="card shadow p-4">
                 <h4 class="text-primary">{{message}}</h4>

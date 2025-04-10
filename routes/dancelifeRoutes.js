@@ -4,6 +4,7 @@ const controller = require('../controllers/homeController.js');
 
 
 router.get("/", controller.home);
+router.get("/home", controller.home);
 
 router.get("/viewCourses", controller.view_courses)
 

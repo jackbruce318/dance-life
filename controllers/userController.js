@@ -18,7 +18,13 @@ exports.signIn = function(req, res) {
 
 exports.post_signIn = function(req, res) {
     console.log("returned to controller")
-    res.redirect('/viewCourses');
-    
+    res.render('home', { 'title': 'Dance Life!',
+        'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!',
+        'user': req.body.username
+    });
 }
+
+exports.logout = function (req, res) {
+    res.clearCookie("jwt").status(200).redirect("/");
+  };
 

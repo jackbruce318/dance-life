@@ -9,6 +9,8 @@ router.get('/signIn', controller.signIn);
 
 router.post('/signIn', login, controller.post_signIn); 
 
+router.get('/logout', controller.logout);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
