@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router(); 
 const controller = require('../controllers/homeController.js');
+const { verify } = require('../auth/auth');
 
 
 router.get("/", controller.home);
 router.get("/home", controller.home);
+
 
 router.get("/viewCourses", controller.view_courses)
 

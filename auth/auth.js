@@ -45,14 +45,15 @@ exports.login = function (req, res,next) {
 exports.verify = function (req, res, next) {
   let accessToken = req.cookies.jwt;
   if (!accessToken) {
-    return res.status(403).send();
+      return res.status(403).send("Not Authorized");
   }
-  let payload;
   try {
-    payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-    next();
+      // Verify the token and attach payload to request
+      let payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+      req.user = payload; // Attach the payload to the request object
+      console.log("JWT verified successfully", payload);
+      next();
   } catch (e) {
-    //if an error occured return request unauthorized error
-    res.status(401).send();
+      res.status(401).send("Not Authorized");
   }
 };

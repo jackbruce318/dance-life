@@ -22,7 +22,9 @@ app.set('view engine', 'mustache');
 
 const userRouter = require('./routes/userRoutes');
 const customerSideRouter = require('./routes/dancelifeRoutes');
+const staffRouter = require('./routes/staffRoutes');
 
+app.use('/staff', staffRouter);  // Mount staffRoutes at the '/staff' path
 app.use('/user', userRouter);  // Mount userRoutes at the '/user' path
 app.use('/', customerSideRouter);
 

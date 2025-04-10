@@ -140,4 +140,6 @@ class Course
 
 }
 
-module.exports = Course;
+const courseModelInstance = new Course();
+courseModelInstance.init();
+module.exports = courseModelInstance;
