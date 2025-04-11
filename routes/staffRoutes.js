@@ -12,6 +12,9 @@ router.post("/createCourse", verify, controller.createCoursePost);
 
 router.get("/viewCourses", verify, controller.view_courses);
 
+router.get("/deleteCourse/:id", verify, controller.deleteCourse);
+router.post("/deleteCourse/:id", verify, controller.deleteCoursePost);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');

@@ -14,9 +14,11 @@
             <div>
             <p>Duration of Course: </p> {{duration}} </br>
             <a href="/classes/{{id}}" class="btn btn-primary">View Classes</a> </br>
+
+
             {{#user}}
             <a href = "staff/editCourse">Edit Course</a> </br>
-            <a href = "staff/deleteCourse">Delete Course</a>
+            <a href = "/staff/deleteCourse/{{id}}">Delete Course</a>
             {{/user}}
 
         </div>

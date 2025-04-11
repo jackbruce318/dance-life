@@ -157,6 +157,16 @@ class Course
         this.db.update(query, updateData, options, callback);
     }
 
+    deleteEntry = function(id) {
+        this.db.remove({ id: id }, {}, function (err, numRemoved) {
+            if (err) {
+                console.log('Error deleting document', err);
+            } else {
+                console.log('Document deleted from the database', numRemoved);
+            }
+        });
+    }
+
 }
 
 const courseModelInstance = new Course();

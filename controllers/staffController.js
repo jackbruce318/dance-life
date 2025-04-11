@@ -51,6 +51,27 @@ exports.createCoursePost = function(req, res) {
     //Create a new course in the database
     courses.createCourse(courseData, function(err, newCourse){});
     res.redirect('/staff/home');
-    
+}
 
+exports.deleteCourse = function(req, res) {
+    const courseId = req.params.id;
+    console.log("deleteCourse triggered with courseId", courseId)
+    courses.getEntryById(courseId).then(
+        (entry) => {
+            res.render('staff/deleteCourse', {
+                'title': 'Delete Course',
+                'message': 'Are you sure you want to delete this course?',
+                'course': entry,
+                'user': req.user.username,
+                'id': courseId
+            });
+        })
+    .catch((err) => {
+        console.log("promise rejected", err);
+    });
+}
+
+exports.deleteCoursePost = function(req, res) {
+    courses.deleteEntry(req.params.id, function(err) {});
+    res.redirect('/staff/home');
 }
