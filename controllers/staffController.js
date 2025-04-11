@@ -16,3 +16,26 @@ exports.loggedInHome = function(req, res) {
         'user': req.user.username
     });
 }
+
+exports.createCourse = function(req, res) {
+    res.render('staff/createCourse', {
+        'title': 'Create Course',
+        'message': 'Create a new course for the Dance Life club.',
+        'user': req.user.username
+    });
+}
+
+exports.createCoursePost = function(req, res) {
+    const courseData = req.body;
+
+    if (!courseData.name || !courseData.description || !courseData.duration) {
+        console.error('Missing course data:', courseData);
+        return;
+    }
+
+    //Create a new course in the database
+    courses.createCourse(courseData, function(err, newCourse){});
+    res.redirect('/staff/home');
+    
+
+}

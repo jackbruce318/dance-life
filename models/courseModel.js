@@ -1,4 +1,5 @@
 const nedb = require('gray-nedb');
+const { nanoid } = require('nanoid');
 
 class Course
 {
@@ -56,7 +57,7 @@ class Course
             duration: 'Three Weeks',
             classes: [
                 {
-                    id: '1',
+                    id: nanoid(),
                     dateTime: new Date('2025-05-20T18:00:00'),
                     description: 'Street Basics',
                     location: 'Studio C',
@@ -64,7 +65,7 @@ class Course
                     participants: []
                 },
                 {
-                    id: '2',
+                    id: nanoid(),
                     dateTime: new Date('2025-05-27T19:30:00'),
                     description: 'Street Rhythm',
                     location: 'Studio B',
@@ -72,7 +73,7 @@ class Course
                     participants: []
                 },
                 {
-                    id: '3',
+                    id: nanoid(),
                     dateTime: new Date('2025-06-04T20:00:00'),
                     description: 'Street Dance Battles',
                     location: 'Studio A',
@@ -132,6 +133,24 @@ class Course
 
             console.log("Class find method returned: ", classToBeBooked.description)
         });
+    }
+
+    createCourse(entryData) {
+        var entry = {
+            id: nanoid(),
+            name: entryData.name,
+            description: entryData.description,
+            duration: entryData.duration,
+            classes: []
+        }
+        console.log('entry created', entry);
+        this.db.insert(entry, function (err, doc) {
+            if (err) {
+                console.log('Error inserting document', subject);
+            } else {
+                console.log('document inserted into the database', doc);
+            }
+        })
     }
 
     update(query, updateData, options, callback) {

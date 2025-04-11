@@ -7,6 +7,9 @@ const { login, verify } = require('../auth/auth');
 router.get("/home", verify, controller.home);
 router.get("/loggedInHome", verify, controller.loggedInHome);
 
+router.get("/createCourse", verify, controller.createCourse);
+router.post("/createCourse", verify, controller.createCoursePost);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
