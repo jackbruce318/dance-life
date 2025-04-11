@@ -75,3 +75,45 @@ exports.deleteCoursePost = function(req, res) {
     courses.deleteEntry(req.params.id, function(err) {});
     res.redirect('/staff/home');
 }
+
+exports.editCourse = function(req, res) {
+    const courseId = req.params.id;
+    console.log("editCourse triggered with courseId", courseId)
+    courses.getEntryById(courseId).then(
+        (entry) => {
+            res.render('staff/editCourse', {
+                'title': 'Edit Course',
+                'message': 'Edit the course details below:',
+                'course': entry,
+                'user': req.user.username,
+                'id': courseId
+            });
+        })
+    .catch((err) => {
+        console.log("promise rejected", err);
+    });
+}
+
+exports.editCoursePost = function(req, res) {
+    console.log("editCoursePost triggered with courseId", req.params.id)
+
+    const courseId = req.params.id;
+    const courseData = req.body;
+
+    if (!courseData.name || !courseData.description || !courseData.duration) {
+        console.error('Missing course data:', courseData);
+        return;
+    }
+    console.log("courseData is populated")
+
+    //Update the course in the database
+    courses.update({ id: courseId }, courseData, {}, (err, numReplaced)=> {
+        if (err) {
+            console.log("Error updating database:", err);
+            return res.status(500).send("Internal Server Error.");
+        }
+
+        console.log(`Course edited and saved to database`);
+        res.redirect('/staff/viewCourses'); // Redirect to the class page after booking
+    })
+}

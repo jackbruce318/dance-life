@@ -4,6 +4,13 @@
 
 <body>
     <h3>{{message}}</h3>
+    {{#user}}
+            <a href = "/staff/home">Return to Staff Home</a> </br>
+    {{/user}}
+
+    {{^user}}
+        <a href = "/">Return to Home</a> </br>
+    {{/user}}
     {{#entries}}
     <div>
         <div>
@@ -17,7 +24,7 @@
 
 
             {{#user}}
-            <a href = "staff/editCourse">Edit Course</a> </br>
+            <a href = "/staff/editCourse/{{id}}">Edit Course</a> </br>
             <a href = "/staff/deleteCourse/{{id}}">Delete Course</a>
             {{/user}}
 
