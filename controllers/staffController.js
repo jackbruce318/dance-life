@@ -17,6 +17,21 @@ exports.loggedInHome = function(req, res) {
     });
 }
 
+exports.view_courses = function(req, res) {
+    //get all courses from the database and cast them to a list
+    courses.getAllEntries()
+    .then((list) => {
+      res.render("viewCourses", { //render the entries template and send the courses data to the frontend
+        title: "Our Courses",
+        entries: list,
+        'user': req.user.username
+      });
+    })
+    .catch((err) => {
+      console.log("promise rejected", err);
+    });
+}
+
 exports.createCourse = function(req, res) {
     res.render('staff/createCourse', {
         'title': 'Create Course',

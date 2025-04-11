@@ -10,6 +10,8 @@ router.get("/loggedInHome", verify, controller.loggedInHome);
 router.get("/createCourse", verify, controller.createCourse);
 router.post("/createCourse", verify, controller.createCoursePost);
 
+router.get("/viewCourses", verify, controller.view_courses);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
