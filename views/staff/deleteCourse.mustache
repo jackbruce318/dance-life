@@ -1,0 +1,11 @@
+<head>
+    {{>header}}
+</head>
+<body>
+    <p>{{message}} {{name}}?</p>
+    <form action="/staff/deleteCourse/{{id}}" method="POST">
+        <button type="submit">Yes, Delete</button>
+        <a href="/staff/viewCourses"><button type="button">No, Go Back</button></a>
+    </form>
+</body>
+</html>

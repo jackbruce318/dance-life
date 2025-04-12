@@ -1,6 +1,4 @@
-const courseDAO = require('../models/courseModel');
-const db = new courseDAO();
-db.init()
+const db = require('../models/courseModel'); // using the shared instance
 
 exports.home = function(req, res) {
     res.render("home", {
@@ -8,6 +6,8 @@ exports.home = function(req, res) {
         'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!'
     })
 }
+
+
 
 exports.view_courses = function(req, res) {
     //get all courses from the database and cast them to a list

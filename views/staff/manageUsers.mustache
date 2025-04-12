@@ -1,0 +1,20 @@
+<head>
+    {{>header}}
+</head>
+<body>
+    <h2>{{message}}</h2>
+    {{#entries}}
+    <div>
+        <div>
+            <p>Username: {{user}}</p>
+            <a href = "/user/deleteUser/{{user}}">Delete User</a>
+        </div>
+    </div>
+    </hr>
+    {{/entries}}
+
+    {{^entries}}
+    No entries yet.
+    {{/entries}}
+</body>
+</html>

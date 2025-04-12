@@ -1,0 +1,11 @@
+<head>
+    {{>header}}
+</head>
+<body>
+    <p>{{message}} {{user}}?</p>
+    <form action="/user/deleteUser/{{user}}" method="POST">
+        <button type="submit">Yes, Delete</button>
+        <a href="/staff/manageUsers"><button type="button">No, Go Back</button></a>
+    </form>
+</body>
+</html>

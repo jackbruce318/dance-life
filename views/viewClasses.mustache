@@ -13,8 +13,13 @@
             {{location}}
             </p>
             <div>
-            <p>Date and Time: {{dateTime}}</p> </br>
-            <a href="/registerAttendance/{{courseId}}/{{id}}" class="btn btn-primary">Register</a>
+            <p>Date and Time: {{date}}</p> </br>
+            <a href="/registerAttendance/{{courseId}}/{{id}}" class="btn btn-primary">Register</a> </br>
+
+            {{#user}}
+            <a href = "/staff/editClass/{{courseId}}/{{id}}">Edit Class</a> </br>
+            <a href = "/staff/deleteClass/{{courseId}}/{{id}}">Delete Class</a>
+            {{/user}}
         </div>
     </div>
     </hr>

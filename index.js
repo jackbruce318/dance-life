@@ -20,8 +20,14 @@ const mustache = require('mustache-express');
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 
-const router = require('./routes/dancelifeRoutes');
-app.use('/', router);
+const userRouter = require('./routes/userRoutes');
+const customerSideRouter = require('./routes/dancelifeRoutes');
+const staffRouter = require('./routes/staffRoutes');
+
+app.use('/staff', staffRouter);  // Mount staffRoutes at the '/staff' path
+app.use('/user', userRouter);  // Mount userRoutes at the '/user' path
+app.use('/', customerSideRouter);
+
 
 app.listen(process.env.PORT ||3000, () => {
     console.log('Server started. Ctrl^c to quit.');
