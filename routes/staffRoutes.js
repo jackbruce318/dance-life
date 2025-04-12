@@ -29,6 +29,9 @@ router.post("/deleteClass/:courseId/:id", verify, controller.deleteClassPost);
 router.get("/editClass/:courseId/:id", verify, controller.editClass);
 router.post("/editClass/:courseId/:id", verify, controller.editClassPost);
 
+router.get("/manageUsers", verify, controller.manageUsers);
+
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');

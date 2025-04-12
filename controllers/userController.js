@@ -24,6 +24,34 @@ exports.post_signIn = function(req, res) {
     });
 }
 
+exports.createUser = function (req, res) {
+    res.render("user/createUser", {
+      title: "Create User",
+      message: "Please enter user details",
+    });
+}
+
+exports.createUserPost = function (req, res) {
+    const user = req.body.user;
+    const password = req.body.password;
+    if (!user || !password) {
+      res.send(401, "no user or no password");
+      return;
+    }
+    db.lookup(user, function (err, u) {
+      if (u) {
+        res.send(401, "User exists:", user);
+        return;
+      }
+      db.create(user, password);
+      console.log("created user", user,);
+      res.redirect("/staff/home");
+    });
+}
+
+
+
+
 exports.logout = function (req, res) {
     res.clearCookie("jwt").status(200).redirect("/");
   };

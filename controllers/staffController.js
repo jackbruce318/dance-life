@@ -287,3 +287,17 @@ exports.editClassPost = function(req, res) {
             return res.status(500).send("Internal Server Error.");
         });
 }
+
+exports.manageUsers = function(req, res) {
+    users.getAllEntries()
+    .then((list) => {
+        res.render("manageUsers", { //render the entries template and send the courses data to the frontend
+            title: "Manage Users",
+            entries: list,
+            'user': req.user.username
+        });
+    })
+    .catch((err) => {
+        console.log("promise rejected", err);
+    });
+}

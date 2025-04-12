@@ -11,6 +11,9 @@ router.post('/signIn', login, controller.post_signIn);
 
 router.get('/logout', controller.logout);
 
+router.get("/createUser", verify, controller.createUser);
+router.post("/createUser", verify, controller.createUserPost);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
