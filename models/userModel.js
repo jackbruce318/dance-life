@@ -60,6 +60,17 @@ class User {
         });
     }
 
+    delete(username) {
+        this.db.remove({ user: username }, {}, function (err, numRemoved) {
+            if (err) {
+                console.log("Error deleting user:", err);
+            } else {
+                console.log("Deleted user:", username, "Number of removed entries:", numRemoved);
+            }
+        });
+
+    }
+
     getAllEntries() {
         //return a Promise object, which can be resolved or rejected
         return new Promise((resolve, reject) => {

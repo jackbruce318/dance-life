@@ -49,6 +49,41 @@ exports.createUserPost = function (req, res) {
     });
 }
 
+exports.deleteUser = function (req, res) {
+
+  if (!req.params.user) {
+    res.send(401, "no user or no password");
+  }
+  if (req.params.user === req.user.username) {
+    console.log("You cannot delete yourself", req.params.user);
+    return;
+  }
+
+    res.render("user/deleteUser", {
+      title: "Delete User",
+      message: "Are you sure you want to delete user ",
+      user: req.params.user,
+    });
+}
+
+exports.deleteUserPost = function (req, res) {
+    const user = req.params.user;
+    if (!user) {
+      res.send(401, "no user or no password");
+      return;
+    }
+    db.lookup(user, function (err, u) {
+      if (!u) {
+        res.send(401, "User does not exist:", user);
+        return;
+      }
+      db.delete(user);
+      console.log("deleted user", user);
+      res.redirect("/staff/manageUsers");
+    });
+}
+
+
 
 
 

@@ -291,13 +291,16 @@ exports.editClassPost = function(req, res) {
 exports.manageUsers = function(req, res) {
     users.getAllEntries()
     .then((list) => {
-        res.render("manageUsers", { //render the entries template and send the courses data to the frontend
+        console.log("attempting to render");
+
+        res.render('staff/manageUsers', {
             title: "Manage Users",
             entries: list,
-            'user': req.user.username
+            user: req.user.username
         });
     })
     .catch((err) => {
-        console.log("promise rejected", err);
+        console.log("Error fetching users:", err);
+        res.status(500).send("Internal Server Error");
     });
 }

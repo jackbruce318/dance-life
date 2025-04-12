@@ -14,6 +14,9 @@ router.get('/logout', controller.logout);
 router.get("/createUser", verify, controller.createUser);
 router.post("/createUser", verify, controller.createUserPost);
 
+router.get('/deleteUser/:user', verify, controller.deleteUser);
+router.post('/deleteUser/:user', verify, controller.deleteUserPost);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
