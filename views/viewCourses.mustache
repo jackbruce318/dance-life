@@ -20,12 +20,21 @@
             </p>
             <div>
             <p>Duration of Course: </p> {{duration}} </br>
-            <a href="/classes/{{id}}" class="btn btn-primary">View Classes</a> </br>
+
+            {{#user}}
+                <a href="/staff/viewClasses/{{id}}" class="btn btn-primary">View Classes</a> </br>
+            {{/user}}
+
+            {{^user}}
+                <a href="/classes/{{id}}" class="btn btn-primary">View Classes</a> </br>
+            {{/user}}
+            
 
 
             {{#user}}
             <a href = "/staff/editCourse/{{id}}">Edit Course</a> </br>
-            <a href = "/staff/deleteCourse/{{id}}">Delete Course</a>
+            <a href = "/staff/deleteCourse/{{id}}">Delete Course</a> </br>
+            <a href = "/staff/createClass/{{id}}">Add Class</a>
             {{/user}}
 
         </div>

@@ -1,0 +1,22 @@
+<head>
+    {{>header}}
+</head>
+<body>
+    <form action="/staff/editClass/{{courseId}}/{{id}}" method="POST">
+        <label for="description">Class Description:</label>
+        <input type="text" id="description" name="description" value="{{class.description}}" required>
+        <br><br>
+
+        <label for="location">Location:</label>
+        <textarea id="location" name="location" required>{{class.location}}</textarea>
+        <br><br>
+
+        <label for="date">Date and Time:</label>
+        <input type="datetime-local" id="date" name="date" value="{{class.date}}" required>
+        <br><br>
+
+
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

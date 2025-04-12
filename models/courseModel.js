@@ -16,30 +16,30 @@ class Course
     //Each course has several classes, which themselves contain a list of participants which are added when users register attendance
     init() {
         this.db.insert({
-            id: '2',
+            id: nanoid(),
             name: 'Zumba',
             description: 'Dance with an exercise twist!',
             duration: 'One Week',
             classes: [
                 {
-                    id: '4',
-                    dateTime: new Date('2025-04-10T18:00:00'),
+                    id: nanoid(),
+                    date: new Date('2025-04-10T18:00:00'),
                     description: 'Zumba Basics',
                     location: 'Studio A',
                     price: 10.0,
                     participants: []
                 },
                 {
-                    id: '5',
-                    dateTime: new Date('2025-04-12T19:30:00'),
+                    id: nanoid(),
+                    date: new Date('2025-04-12T19:30:00'),
                     description: 'Zumba Cardio Blast',
                     location: 'Studio B',
                     price: 12.5,
                     participants: []
                 },
                 {
-                    id: '6',
-                    dateTime: new Date('2025-04-15T17:00:00'),
+                    id: nanoid(),
+                    date: new Date('2025-04-15T17:00:00'),
                     description: 'Zumba Strength Training',
                     location: 'Studio C',
                     price: 14.0,
@@ -51,14 +51,14 @@ class Course
         console.log('db entry Zumba inserted');
 
         this.db.insert({
-            id: '1',
+            id: nanoid(),
             name: 'Street Dance',
             description: 'Urban beats and modern moves!',
             duration: 'Three Weeks',
             classes: [
                 {
                     id: nanoid(),
-                    dateTime: new Date('2025-05-20T18:00:00'),
+                    date: new Date('2025-05-20T18:00:00'),
                     description: 'Street Basics',
                     location: 'Studio C',
                     price: 10.0,
@@ -66,7 +66,7 @@ class Course
                 },
                 {
                     id: nanoid(),
-                    dateTime: new Date('2025-05-27T19:30:00'),
+                    date: new Date('2025-05-27T19:30:00'),
                     description: 'Street Rhythm',
                     location: 'Studio B',
                     price: 12.5,
@@ -74,7 +74,7 @@ class Course
                 },
                 {
                     id: nanoid(),
-                    dateTime: new Date('2025-06-04T20:00:00'),
+                    date: new Date('2025-06-04T20:00:00'),
                     description: 'Street Dance Battles',
                     location: 'Studio A',
                     price: 14.0,
@@ -154,6 +154,9 @@ class Course
     }
 
     update(query, updateData, options, callback) {
+
+        
+
         this.db.update(query, updateData, options, callback);
     }
 
@@ -163,6 +166,30 @@ class Course
                 console.log('Error deleting document', err);
             } else {
                 console.log('Document deleted from the database', numRemoved);
+            }
+        });
+    }
+
+    addClass(courseId, classData, callback) {
+        this.db.update({ id: courseId }, { $push: { classes: classData } }, {}, function (err, numReplaced) {
+            if (err) {
+                console.log("Error adding class to course:", err);
+                callback(err, null);
+            } else {
+                console.log(`Class added to course with ID ${courseId}`);
+                callback(null, numReplaced);
+            }
+        });
+    }
+
+    deleteClass(courseId, classId, callback) {
+        this.db.update({ id: courseId }, { $pull: { classes: { id: classId } } }, {}, function (err, numRemoved) {
+            if (err) {
+                console.log("Error deleting class from course:", err);
+                callback(err, null);
+            } else {
+                console.log(`Class with ID ${classId} deleted from course with ID ${courseId}`);
+                callback(null, numRemoved);
             }
         });
     }

@@ -1,0 +1,31 @@
+<html>
+<head>{{>header}}</head>
+<body>
+
+<form action="/staff/createClass/{{courseId}}" method="POST">
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+    </div>
+
+    <div>
+        <label for="location">Location:</label>
+        <textarea id="location" name="location" rows="4" required></textarea>
+    </div>
+
+    <div>
+        <label for="price">Price of Class:</label>
+        <input type="double" id="price" name="price" required>
+    </div>
+
+    <div>
+        <label for="date">Date:</label>
+        <input type="datetime-local" id="date" name="date" required>
+    </div>
+
+    <button type="submit">Create Class</button>
+</form>
+
+</body>
+
+</html>

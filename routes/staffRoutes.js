@@ -18,6 +18,17 @@ router.post("/deleteCourse/:id", verify, controller.deleteCoursePost);
 router.get("/editCourse/:id", verify, controller.editCourse);
 router.post("/editCourse/:id", verify, controller.editCoursePost);
 
+router.get("/viewClasses/:id", verify, controller.view_classes);
+
+router.get("/createClass/:id", verify, controller.createClass);
+router.post("/createClass/:id", verify, controller.createClassPost);
+
+router.get("/deleteClass/:courseId/:id", verify, controller.deleteClass);
+router.post("/deleteClass/:courseId/:id", verify, controller.deleteClassPost);
+
+router.get("/editClass/:courseId/:id", verify, controller.editClass);
+router.post("/editClass/:courseId/:id", verify, controller.editClassPost);
+
 router.use(function(req, res) {
     res.status(404);
     res.type('text/plain');
