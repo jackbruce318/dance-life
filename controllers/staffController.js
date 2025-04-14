@@ -222,6 +222,15 @@ exports.editClass = function(req, res) {
     courses.getEntryById(courseId).then(
         (entry) => {
             const classToEdit = entry.classes.find((currentClass) => currentClass.id == classId);
+            
+            // Format the date to YYYY-MM-DDThh:mm format for the input field
+
+            const formattedDate = new Date(classToEdit.date)
+            .toISOString()
+            .slice(0, 16); // Get YYYY-MM-DDThh:mm format
+        
+            classToEdit.date = formattedDate;
+
             res.render('staff/editClass', {
                 'title': 'Edit Class',
                 'message': 'Edit the class details below:',
@@ -256,12 +265,20 @@ exports.editClassPost = function(req, res) {
                 return res.status(404).send("Class not found.");
             }
 
-            //Update class details
+            //Validate that the date is not before now
+            const currentDate = new Date();
+            const classDate = new Date(classData.date);
+            if (classDate < currentDate) {
+                console.log("Class date cannot be in the past.");
+                return ;
+            }
+
+            // Update class details
             classToBeEdited.description = classData.description;
             classToBeEdited.date = classData.date;
             classToBeEdited.location = classData.location;
 
-            //Update course with modified class
+            // Update course with modified class
             courses.update(
                 { id: courseId }, 
                 entry, {}, 

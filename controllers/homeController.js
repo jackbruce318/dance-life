@@ -3,7 +3,8 @@ const db = require('../models/courseModel'); // using the shared instance
 exports.home = function(req, res) {
     res.render("home", {
         'title': 'Dance Life!',
-        'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!'
+        'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!',
+        'user': req.user ? req.user.username : null, //Check if user is logged in
     })
 }
 
@@ -16,6 +17,7 @@ exports.view_courses = function(req, res) {
       res.render("viewCourses", { //render the entries template and send the courses data to the frontend
         title: "Our Courses",
         entries: list,
+        'user': req.user ? req.user.username : null, //Check if user is logged in
       });
     })
     .catch((err) => {
@@ -31,7 +33,8 @@ exports.course_details = function(req, res) {
 
         res.render('viewClasses', {
             entries: entry.classes,
-            courseId: id
+            courseId: id,
+            'user': req.user ? req.user.username : null, //Check if user is logged in
         });
         }).catch((err) => {
         console.log('error handling course classes', err);
@@ -66,6 +69,7 @@ exports.book_class = function(req, res) {
             date: classToBeBooked.date,
             courseId: entry.id,
             classId: classToBeBooked.id,
+            'user': req.user ? req.user.username : null, //Check if user is logged in
         });
         }).catch((err) => {
         console.log('error handling course classes', err);
@@ -125,6 +129,7 @@ exports.enrol_course = function(req, res) {
                 id: entry.id,
                 duration: entry.duration,
                 startDate: entry.classes[0].dateTime,
+                'user': req.user ? req.user.username : null, //Check if user is logged in
             });
         }).catch((err) => {
         console.log('error handling course classes', err);
@@ -168,6 +173,7 @@ exports.about = function(req, res) {
         'title': 'About Us',
         'message': 'Dance Life is a fun and inclusive club for people of all ages based in the heart of the community. Our main centre can be found at 47 Frederick St, Glasgow',
         'message2': 'Our state of the art studios are equipped with the best equipment to suit all your needs. Studio A is our largest hall and is perfect for large classes and events. Studio B is our smaller hall, perfect for smaller classes and private lessons. Studio C is our newest addition, a teaching-focused space designed for hands-on learning.',
+        'user': req.user ? req.user.username : null, //Check if user is logged in
     })
 }
 

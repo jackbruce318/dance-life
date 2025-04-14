@@ -6,7 +6,6 @@ exports.signIn = function(req, res) {
 }
 
 exports.post_signIn = function(req, res) {
-
     res.render('home', { 'title': 'Dance Life!',
         'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!',
         'user': req.body.username
@@ -26,12 +25,10 @@ exports.createUserPost = function (req, res) {
     const user = req.body.user;
     const password = req.body.password;
     if (!user || !password) {
-      res.send(401, "no user or no password");
       return;
     }
     db.lookup(user, function (err, u) {
       if (u) {
-        res.send(401, "User exists:", user);
         return;
       }
       db.create(user, password);

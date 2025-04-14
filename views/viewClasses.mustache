@@ -4,7 +4,16 @@
 
 <body>
 
-<a href = "/viewCourses"> Go Back </a>
+{{^user}}
+    <a href = "/viewCourses"> Go Back </a>
+{{/user}}
+
+
+{{#user}}
+    <a href = "/staff/viewCourses"> Go Back </a>
+{{/user}}
+
+
 <h3>Already know that you'll be available for all of these classes? Save time and enrol in the course <a href = "/enrolCourse/{{courseId}}">here!</a></h3>
     
     {{#entries}}

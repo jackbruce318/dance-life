@@ -13,7 +13,7 @@ exports.login = function (req, res,next) {
     }
     if (!user) {
       console.log("user ", username, " not found");
-      return res.render("user/register");
+      return res.render("user/signIn");
     }
     //compare provided password with stored password
     console.log("user found")
@@ -52,5 +52,25 @@ exports.verify = function (req, res, next) {
       next();
   } catch (e) {
       res.status(401).send("Not Authorized");
+  }
+};
+
+exports.getUserIfExists = function (req, res, next) {
+  let accessToken = req.cookies.jwt;
+  
+  if (!accessToken) {
+      // No token, but continue anyway
+      next();
+      return;
+  }
+
+  try {
+      let payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+      req.user = payload;
+      next();
+  } catch (e) {
+      //Invalid token, but continue anyway
+      console.log("Invalid token in getUserIfExists:", e);
+      next();
   }
 };

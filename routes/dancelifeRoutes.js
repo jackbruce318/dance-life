@@ -1,25 +1,25 @@
 const express = require('express');
 const router = express.Router(); 
 const controller = require('../controllers/homeController.js');
-const { verify } = require('../auth/auth');
+const { verify, getUserIfExists } = require('../auth/auth');
 
 
-router.get("/", controller.home);
-router.get("/home", controller.home);
+router.get("/", getUserIfExists , controller.home);
+router.get("/home", getUserIfExists , controller.home);
+router.get("/about", getUserIfExists , controller.about);
+
+router.get("/viewCourses", getUserIfExists, controller.view_courses)
 
 
-router.get("/viewCourses", controller.view_courses)
+router.get("/classes/:id", getUserIfExists, controller.course_details)
 
+router.get("/registerAttendance/:courseId/:id", getUserIfExists, controller.book_class)
+router.post("/registerAttendance/:courseId/:id", getUserIfExists, controller.post_book_class)
 
-router.get("/classes/:id", controller.course_details)
+router.get("/enrolCourse/:courseId", getUserIfExists, controller.enrol_course)
+router.post("/enrolCourse/:courseId", getUserIfExists, controller.post_enrol_course)
 
-router.get("/registerAttendance/:courseId/:id", controller.book_class)
-router.post("/registerAttendance/:courseId/:id", controller.post_book_class)
-
-router.get("/enrolCourse/:courseId", controller.enrol_course)
-router.post("/enrolCourse/:courseId", controller.post_enrol_course)
-
-router.get("/courseEnrol", controller.enrol_course)
+router.get("/courseEnrol", getUserIfExists, controller.enrol_course)
 
 router.use(function(req, res) {
     res.status(404);
