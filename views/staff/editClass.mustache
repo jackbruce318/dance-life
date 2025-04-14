@@ -5,16 +5,19 @@
     <a href = "/staff/viewClasses/{{courseId}}"> Go Back </a>
 
     <form action="/staff/editClass/{{courseId}}/{{id}}" method="POST">
-        <label for="description">Class Description:</label>
+        <label for="description">Class Description:</label> </br>
         <input type="text" id="description" name="description" value="{{class.description}}" required>
         <br><br>
 
-        <label for="location">Location:</label>
+        <label for="location">Location:</label> </br>
         <textarea id="location" name="location" required>{{class.location}}</textarea>
         <br><br>
 
-        <label for="date">Date and Time:</label>
+        <label for="date">Date and Time:</label> </br>
         <input type="datetime-local" id="date" name="date" value="{{class.date}}" required>
+
+        <label for="price">Price:</label> </br>
+        <input type="double" id="price" name="price" required>{{class.price}}</input>
         <br><br>
 
         <button type="submit">Save Changes</button>
