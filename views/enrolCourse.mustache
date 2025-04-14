@@ -3,6 +3,8 @@
 {{>header}}
 
 <body>
+    <a href = "/classes/{{id}}"> Go Back </a>
+
     <h2>Confirm Enrolment for {{name}} for {{duration}} commencing {{startDate}}? You will be registered present for all classes.</h2> </br>
     <h3>Please confirm you are able to attend the classes listed on the previous page so our attendance figures are accurate.</h3>
     <form action="/enrolCourse/{{id}}" method="POST">

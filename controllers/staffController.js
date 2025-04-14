@@ -11,7 +11,7 @@ exports.home = function(req, res) {
 }
 
 exports.loggedInHome = function(req, res) {
-    console.log("loggedInHome triggered with user", req.user.username)  
+    
     res.render('home', { 'title': 'Dance Life!',
         'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!',
         'user': req.user.username
@@ -45,7 +45,6 @@ exports.createCoursePost = function(req, res) {
     const courseData = req.body;
 
     if (!courseData.name || !courseData.description || !courseData.duration) {
-        console.error('Missing course data:', courseData);
         return;
     }
 
@@ -54,9 +53,10 @@ exports.createCoursePost = function(req, res) {
     res.redirect('/staff/home');
 }
 
+//send item details to the view so user can confirm they wish to delete it
 exports.deleteCourse = function(req, res) {
     const courseId = req.params.id;
-    console.log("deleteCourse triggered with courseId", courseId)
+
     courses.getEntryById(courseId).then(
         (entry) => {
             res.render('staff/deleteCourse', {
@@ -77,9 +77,9 @@ exports.deleteCoursePost = function(req, res) {
     res.redirect('/staff/home');
 }
 
+//send current details of the course to the view
 exports.editCourse = function(req, res) {
     const courseId = req.params.id;
-    console.log("editCourse triggered with courseId", courseId)
     courses.getEntryById(courseId).then(
         (entry) => {
             res.render('staff/editCourse', {
@@ -96,16 +96,14 @@ exports.editCourse = function(req, res) {
 }
 
 exports.editCoursePost = function(req, res) {
-    console.log("editCoursePost triggered with courseId", req.params.id)
-
+    
     const courseId = req.params.id;
     const courseData = req.body;
 
     if (!courseData.name || !courseData.description || !courseData.duration) {
-        console.error('Missing course data:', courseData);
+        
         return;
     }
-    console.log("courseData is populated")
 
 
     courses.getEntryById(courseId)
@@ -124,14 +122,12 @@ exports.editCoursePost = function(req, res) {
                         description: courseData.description,
                         duration: courseData.duration
                     }
-                }, 
-                {}, 
+                }, {}, 
                 (err, numReplaced) => {
                     if (err) {
                         console.log("Error updating database:", err);
                         return res.status(500).send("Internal Server Error.");
                     }
-                    console.log(`Course edited and saved to database`);
                     res.redirect('/staff/viewCourses');
                 }
             );
@@ -143,7 +139,7 @@ exports.editCoursePost = function(req, res) {
 }
 
 exports.view_classes = function(req, res) {
-    console.log('finding class details', req.params.id);
+    //get all classes from the database and cast them to a list
     let id = req.params.id;
 
     courses.getEntryById(id).then(
@@ -161,7 +157,6 @@ exports.view_classes = function(req, res) {
 }
 
 exports.createClass = function(req, res) {
-    console.log('createClass triggered with courseId', req.params.id)
     const courseId = req.params.id;
     res.render('staff/createClass', {
         'title': 'Create Class',
@@ -172,15 +167,14 @@ exports.createClass = function(req, res) {
 }
 
 exports.createClassPost = function(req, res) {
-    console.log('createClassPost triggered with courseId', req.params.id)
+    
     const courseId = req.params.id;
     const classData = req.body;
 
-    classData.id = nanoid(); // Generate a unique ID for the class
-    classData.participants = []; // Initialize participants as an empty array
+    classData.id = nanoid(); //Generate a unique ID for the class
+    classData.participants = []; //Initialize participants as an empty array
 
     if (!classData.description || !classData.date || !classData.location) {
-        console.error('Missing class data:', classData);
         return;
     }
 
@@ -189,10 +183,11 @@ exports.createClassPost = function(req, res) {
     res.redirect('/staff/viewCourses');
 }
 
+//send details of the class to the view so user can confirm this is the item they wish to remove
 exports.deleteClass = function(req, res) {
     const courseId = req.params.courseId;
     const classId = req.params.id;
-    console.log("deleteClass triggered with courseId", courseId, "and classId", classId)
+    
     courses.getEntryById(courseId).then(
         (entry) => {
             const classToDelete = entry.classes.find((currentClass) => currentClass.id == classId);
@@ -210,10 +205,11 @@ exports.deleteClass = function(req, res) {
     });
 }
 
+//delete class from database then return to the view classes page
 exports.deleteClassPost = function(req, res) {
     const courseId = req.params.courseId;
     const classId = req.params.id;
-    console.log("deleteClassPost triggered with courseId", courseId, "and classId", classId)
+    
     courses.deleteClass(courseId, classId, function(err) {});
     res.redirect('/staff/viewClasses/' + courseId);
 }
@@ -221,10 +217,20 @@ exports.deleteClassPost = function(req, res) {
 exports.editClass = function(req, res) {
     const courseId = req.params.courseId;
     const classId = req.params.id;
-    console.log("editClass triggered with courseId", courseId, "and classId", classId)
+    
+    //find the object then send its existing details to the view
     courses.getEntryById(courseId).then(
         (entry) => {
             const classToEdit = entry.classes.find((currentClass) => currentClass.id == classId);
+            
+            // Format the date to YYYY-MM-DDThh:mm format for the input field
+
+            const formattedDate = new Date(classToEdit.date)
+            .toISOString()
+            .slice(0, 16); // Get YYYY-MM-DDThh:mm format
+        
+            classToEdit.date = formattedDate;
+
             res.render('staff/editClass', {
                 'title': 'Edit Class',
                 'message': 'Edit the class details below:',
@@ -240,8 +246,7 @@ exports.editClass = function(req, res) {
 }
 
 exports.editClassPost = function(req, res) {
-    //Console output to check that data is flowing correctly
-    console.log('Editing Class:', req.params.id);
+
     let classId = req.params.id;
     let courseId = req.params.courseId;
     let classData = req.body;
@@ -260,24 +265,28 @@ exports.editClassPost = function(req, res) {
                 return res.status(404).send("Class not found.");
             }
 
-            console.log("Found class to edit:", classToBeEdited.description);
+            //Validate that the date is not before now
+            const currentDate = new Date();
+            const classDate = new Date(classData.date);
+            if (classDate < currentDate) {
+                console.log("Class date cannot be in the past.");
+                return ;
+            }
 
-            //Update class details
+            // Update class details
             classToBeEdited.description = classData.description;
             classToBeEdited.date = classData.date;
             classToBeEdited.location = classData.location;
 
-            //Update course with modified class
+            // Update course with modified class
             courses.update(
                 { id: courseId }, 
-                entry, 
-                {}, 
+                entry, {}, 
                 (err, numReplaced) => {
                     if (err) {
                         console.log("Error updating database:", err);
                         return res.status(500).send("Internal Server Error.");
                     }
-                    console.log(`Class ${classId} updated successfully`);
                     res.redirect(`/staff/viewClasses/${courseId}`);
                 }
             );
@@ -291,8 +300,7 @@ exports.editClassPost = function(req, res) {
 exports.manageUsers = function(req, res) {
     users.getAllEntries()
     .then((list) => {
-        console.log("attempting to render");
-
+       
         res.render('staff/manageUsers', {
             title: "Manage Users",
             entries: list,
@@ -302,5 +310,28 @@ exports.manageUsers = function(req, res) {
     .catch((err) => {
         console.log("Error fetching users:", err);
         res.status(500).send("Internal Server Error");
+    });
+}
+
+exports.view_participants = function(req, res) {
+    const courseId = req.params.courseId;
+    const classId = req.params.classId;
+
+    
+    courses.getEntryById(courseId).then(
+        (entry) => {
+            const classToView = entry.classes.find((currentClass) => currentClass.id == classId);
+            res.render('staff/viewParticipants', {
+                'title': 'View Participants',
+                'message': 'Participants in this class:',
+                'class': classToView,
+                'courseId': courseId,
+                'entries' : classToView.participants,
+                'user': req.user.username,
+                'id': classId
+            });
+        })
+    .catch((err) => {
+        console.log("promise rejected", err);
     });
 }

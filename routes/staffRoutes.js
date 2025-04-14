@@ -31,6 +31,8 @@ router.post("/editClass/:courseId/:id", verify, controller.editClassPost);
 
 router.get("/manageUsers", verify, controller.manageUsers);
 
+router.get("/viewParticipants/:courseId/:classId", verify, controller.view_participants);
+
 
 router.use(function(req, res) {
     res.status(404);

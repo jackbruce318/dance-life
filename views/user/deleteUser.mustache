@@ -2,6 +2,8 @@
     {{>header}}
 </head>
 <body>
+    <a href = "/staff/manageUsers"> Go Back </a>
+
     <p>{{message}} {{user}}?</p>
     <form action="/user/deleteUser/{{user}}" method="POST">
         <button type="submit">Yes, Delete</button>

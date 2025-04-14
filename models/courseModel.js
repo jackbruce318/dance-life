@@ -135,6 +135,7 @@ class Course
         });
     }
 
+    //assign user written fields and randomly generate ID
     createCourse(entryData) {
         var entry = {
             id: nanoid(),
@@ -143,7 +144,7 @@ class Course
             duration: entryData.duration,
             classes: []
         }
-        console.log('entry created', entry);
+
         this.db.insert(entry, function (err, doc) {
             if (err) {
                 console.log('Error inserting document', subject);
@@ -154,8 +155,6 @@ class Course
     }
 
     update(query, updateData, options, callback) {
-
-        
 
         this.db.update(query, updateData, options, callback);
     }
@@ -171,24 +170,24 @@ class Course
     }
 
     addClass(courseId, classData, callback) {
+        //add class item to classes array in course object
         this.db.update({ id: courseId }, { $push: { classes: classData } }, {}, function (err, numReplaced) {
             if (err) {
                 console.log("Error adding class to course:", err);
                 callback(err, null);
             } else {
-                console.log(`Class added to course with ID ${courseId}`);
                 callback(null, numReplaced);
             }
         });
     }
 
     deleteClass(courseId, classId, callback) {
+        //pull class item from array in object where id matches courseId and classIds match
         this.db.update({ id: courseId }, { $pull: { classes: { id: classId } } }, {}, function (err, numRemoved) {
             if (err) {
                 console.log("Error deleting class from course:", err);
                 callback(err, null);
             } else {
-                console.log(`Class with ID ${classId} deleted from course with ID ${courseId}`);
                 callback(null, numRemoved);
             }
         });

@@ -10,7 +10,7 @@ class User {
             console.log('UserModel connected to ' + dbFilePath);
         } else {
             this.db = new Datastore();
-            console.log('UserModel running in in-memory mode');
+            console.log('user db running in memory only');  
         }
     }
 
@@ -21,7 +21,7 @@ class User {
             password: '$2a$10$wp6QLS9DeuSo.xYDz5Zx1ukCG76n1UkdZtH4u6U1HaJH5/lko3Pd.',
             role: 'admin'
         });
-        console.log("user Saxon added");
+        
 
         this.db.insert({
             user: 'Jensen',
@@ -45,17 +45,14 @@ class User {
         });
     }
     lookup(username, cb) {
-        console.log("Looking up user:", username);
         this.db.find({ 'user': username }, function (err, entries) {
             if (err) {
                 console.log("Database error:", err);
                 return cb(err, null);
             }
             if (entries.length === 0) {
-                console.log("No user found for username:", username);
                 return cb(null, null);
             }
-            console.log("User found:", entries[0]);
             return cb(null, entries[0]);
         });
     }

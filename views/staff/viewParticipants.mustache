@@ -1,0 +1,27 @@
+<html>
+    <head>
+        {{>header}}
+    </head>
+
+    <body>
+        <a href="/staff/viewClasses/{{courseId}}"> Go Back </a>
+        
+        <h4>{{message}}</h4>
+        
+        <div class="container">
+            {{#entries}}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        {{.}}  <!-- The dot notation directly outputs the string value -->
+                    </div>
+                </div>
+            {{/entries}}
+
+            {{^entries}}
+                <div>
+                    No participants registered yet.
+                </div>
+            {{/entries}}
+        </div>
+    </body>
+</html>

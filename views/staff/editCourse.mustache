@@ -2,6 +2,8 @@
     {{>header}}
 </head>
 <body>
+    <a href = "/staff/viewCourses"> Go Back </a>
+
     <form action="/staff/editCourse/{{id}}" method="POST">
         <label for="name">Course Name:</label>
         <input type="text" id="name" name="name" value="{{course.name}}" required>
