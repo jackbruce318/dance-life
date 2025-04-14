@@ -3,6 +3,9 @@
 {{>header}}
 
 <body>
+
+    <a href = "/classes/{{courseId}}"> Go Back </a>
+
     <h2>Confirm Attendance for {{description}} in {{location}} on {{date}}</h2>
     <form action="/registerAttendance/{{courseId}}/{{classId}}" method="POST">
         <label for="name">Your Name:</label>

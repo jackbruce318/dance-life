@@ -3,6 +3,8 @@
 {{>header}}
 
 <body>
+
+<a href = "/viewCourses"> Go Back </a>
 <h3>Already know that you'll be available for all of these classes? Save time and enrol in the course <a href = "/enrolCourse/{{courseId}}">here!</a></h3>
     
     {{#entries}}
@@ -18,7 +20,8 @@
 
             {{#user}}
             <a href = "/staff/editClass/{{courseId}}/{{id}}">Edit Class</a> </br>
-            <a href = "/staff/deleteClass/{{courseId}}/{{id}}">Delete Class</a>
+            <a href = "/staff/deleteClass/{{courseId}}/{{id}}">Delete Class</a> </br>
+            <a href = "/staff/viewParticipants/{{courseId}}/{{id}}">View Participants</a>
             {{/user}}
         </div>
     </div>

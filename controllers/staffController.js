@@ -304,3 +304,27 @@ exports.manageUsers = function(req, res) {
         res.status(500).send("Internal Server Error");
     });
 }
+
+exports.view_participants = function(req, res) {
+    const courseId = req.params.courseId;
+    const classId = req.params.classId;
+
+    console.log("view_participants triggered with courseId", courseId, "and classId", classId)
+
+    courses.getEntryById(courseId).then(
+        (entry) => {
+            const classToView = entry.classes.find((currentClass) => currentClass.id == classId);
+            res.render('staff/viewParticipants', {
+                'title': 'View Participants',
+                'message': 'Participants in this class:',
+                'class': classToView,
+                'courseId': courseId,
+                'entries' : classToView.participants,
+                'user': req.user.username,
+                'id': classId
+            });
+        })
+    .catch((err) => {
+        console.log("promise rejected", err);
+    });
+}

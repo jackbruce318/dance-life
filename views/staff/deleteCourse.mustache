@@ -2,6 +2,8 @@
     {{>header}}
 </head>
 <body>
+    <a href = "/staff/viewCourses"> Go Back </a>
+
     <p>{{message}} {{name}}?</p>
     <form action="/staff/deleteCourse/{{id}}" method="POST">
         <button type="submit">Yes, Delete</button>
