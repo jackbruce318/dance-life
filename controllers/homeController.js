@@ -24,13 +24,11 @@ exports.view_courses = function(req, res) {
 }
 
 exports.course_details = function(req, res) {
-    console.log('finding class details', req.params.id);
     let id = req.params.id;
 
     db.getEntryById(id).then(
         (entry) => {
 
-        console.log('Entry classes:', entry.classes);
         res.render('viewClasses', {
             entries: entry.classes,
             courseId: id
@@ -62,9 +60,6 @@ exports.book_class = function(req, res) {
             return res.status(404).send("Class not found.");
         }
 
-        console.log("Class find method returned: ", classToBeBooked.description)
-
-        console.log('Entry classes:', entry.classes);
         res.render('registerAttendance', {
             description: classToBeBooked.description,
             location: classToBeBooked.location,
@@ -80,8 +75,6 @@ exports.book_class = function(req, res) {
 }
 
 exports.post_book_class = function(req, res) {
-    //Console output to check that data is flowing correctly
-    console.log('Booking class:', req.params.id);
     let id = req.params.id;
     let courseId = req.params.courseId;
 
@@ -100,8 +93,6 @@ exports.post_book_class = function(req, res) {
             return res.status(404).send("Class not found.");
         }
 
-        console.log("Class find method returned: ", classToBeBooked.description)
-
         //add the participant to the class
         classToBeBooked.participants.push(req.body.name);
 
@@ -111,7 +102,6 @@ exports.post_book_class = function(req, res) {
                 return res.status(500).send("Internal Server Error.");
             }
 
-            console.log(`Participant added to class ${id} and saved to database.`);
             res.redirect('/viewCourses'); // Redirect to the class page after booking
         });
 
@@ -120,8 +110,7 @@ exports.post_book_class = function(req, res) {
 
 exports.enrol_course = function(req, res) {
     let id = req.params.courseId; // Extract courseId from the route
-    console.log('Enrolling in course:', id);
-
+   
     db.getEntryById(id).then(
         (entry) => {
             //error handler in case query returns no results
@@ -143,9 +132,7 @@ exports.enrol_course = function(req, res) {
 }
 
 exports.post_enrol_course = function(req, res) {
-
-    //Console output to check that data is flowing correctly
-    console.log('Post Enrolling in course:', req.params.courseId);
+    
     let id = req.params.courseId;
     let enrolment = req.body.name; // Get the enrolment data from the form
 
@@ -167,7 +154,6 @@ exports.post_enrol_course = function(req, res) {
                 return res.status(500).send("Internal Server Error.");
             }
 
-            console.log(`Participant added to course ${id} and saved to database.`);
             res.redirect('/viewCourses'); // Redirect to the class page after booking
         });
 
@@ -175,6 +161,14 @@ exports.post_enrol_course = function(req, res) {
     .catch((err) => {
         console.log('error handling course classes', err);
     });
+}
+
+exports.about = function(req, res) {
+    res.render("about", {
+        'title': 'About Us',
+        'message': 'Dance Life is a fun and inclusive club for people of all ages based in the heart of the community. Our main centre can be found at 47 Frederick St, Glasgow',
+        'message2': 'Our state of the art studios are equipped with the best equipment to suit all your needs. Studio A is our largest hall and is perfect for large classes and events. Studio B is our smaller hall, perfect for smaller classes and private lessons. Studio C is our newest addition, a teaching-focused space designed for hands-on learning.',
+    })
 }
 
 

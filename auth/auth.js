@@ -6,11 +6,9 @@ exports.login = function (req, res,next) {
 
   let username = req.body.username;
   let password = req.body.password;
-  console.log("login middleware triggered")
-
+ 
   userModel.lookup(username, function (err, user) {
     if (err) {
-      console.log("error looking up user", err);
       return res.status(401).send();
     }
     if (!user) {
@@ -29,7 +27,6 @@ exports.login = function (req, res,next) {
         try {
             accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 300 });
             res.cookie("jwt", accessToken);
-            console.log("JWT created successfully");
             next();
         } catch (err) {
             console.log("Error creating JWT:", err);
@@ -51,7 +48,7 @@ exports.verify = function (req, res, next) {
       // Verify the token and attach payload to request
       let payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
       req.user = payload; // Attach the payload to the request object
-      console.log("JWT verified successfully", payload);
+      
       next();
   } catch (e) {
       res.status(401).send("Not Authorized");

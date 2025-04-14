@@ -4,21 +4,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <h1><a href ="/">Dance Life!</a></h1>
-    <h2>{{title}}</h2>
-
+    <h1><a href="/" class="site-title">Dance Life!</a></h1>
+    <h2 class="page-title">{{title}}</h2>
 
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        :root {
+            --primary-color: #FF1E8C;   
+            --secondary-color: #3CDFFF;  
+            --accent-color: #FFD700;      
+            --background-color: #FAFAFA;
+            --text-color: #333333;
         }
-        h1 {
+
+        body {
+            background-color: var(--background-color);
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .site-title {
             text-align: center;
-            margin-top: 30px;
-            color: #343a40;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin: 20px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .site-title:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        
+        .btn {
+            border-radius: 25px;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+            color: white; 
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white; 
+        }
+
+        .btn-primary:hover {
+            background-color: #FF0077;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 30, 140, 0.3);
+            color: white; 
+        }
+
+        
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        
+        a {
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #eee;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(60, 223, 255, 0.25);
+        }
+
+       
+        .table {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
         }
     </style>
 </head>

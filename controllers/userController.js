@@ -1,23 +1,12 @@
 const db = require('../models/userModel'); // using the shared instance
 
-exports.post_new_user = function(req, res) { const user =
-    req.body.username; const password = req.body.pass;
-    if (!user || !password) { res.send(401,
-        'no user or no password'); return;
-    }
-    db.lookup(user, function(err, u) { if (u) {
-        res.send(401, "User exists:", user); return; }
-        db.create(user, password); console.log("register user", user, "password", password);
-        res.redirect('/signIn');
-    });
-} 
 
 exports.signIn = function(req, res) {
     res.render('user/signIn');
 }
 
 exports.post_signIn = function(req, res) {
-    console.log("returned to controller")
+
     res.render('home', { 'title': 'Dance Life!',
         'message': 'Welcome to the hub for Dance Life, a fun and inclusive club for people of all ages!',
         'user': req.body.username
@@ -31,6 +20,8 @@ exports.createUser = function (req, res) {
     });
 }
 
+
+//make sure fields are populated and user does not already exist
 exports.createUserPost = function (req, res) {
     const user = req.body.user;
     const password = req.body.password;
@@ -44,18 +35,20 @@ exports.createUserPost = function (req, res) {
         return;
       }
       db.create(user, password);
-      console.log("created user", user,);
+      
       res.redirect("/staff/home");
     });
 }
 
+//make sure user is not the same as the one logged in
+//and that the user exists in the database
 exports.deleteUser = function (req, res) {
 
   if (!req.params.user) {
     res.send(401, "no user or no password");
   }
   if (req.params.user === req.user.username) {
-    console.log("You cannot delete yourself", req.params.user);
+    
     return;
   }
 
